@@ -47,7 +47,7 @@ HOMEWORK_VERDICTS = {
 
 
 def check_tokens():
-    """Проверяем доступность переменных окружения"""
+    """Проверяем доступность переменных окружения."""
     variables = [PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]
     for variable in variables:
         if variable is None:
@@ -58,15 +58,16 @@ def check_tokens():
 
 
 def send_message(bot, message):
-    '''Отправляем сообщение в Телеграм'''
+    """Отправляем сообщение в Телеграм."""
     try:
         bot.send_message(TELEGRAM_CHAT_ID, message)
         logger.debug('Сообщение отправлено')
     except Exception as error:
         logger.error(f'Сообщение не отправлено. Ошибка {error}')
 
+
 def get_api_answer(timestamp):
-    """Делаем запрос к единственному эндпоинту API-сервиса"""
+    """Делаем запрос к единственному эндпоинту API-сервиса."""
     payload = {'from_date': timestamp}
     try:
         response = requests.get(ENDPOINT, headers=HEADERS, params=payload)
@@ -78,8 +79,9 @@ def get_api_answer(timestamp):
         )
     return response.json()
 
+
 def check_response(response):
-    """Проверка ответа API"""
+    """Проверка ответа API."""
     try:
         response = response['homeworks']
     except KeyError:
@@ -88,8 +90,9 @@ def check_response(response):
         raise TypeError('Данные не в виде списка')
     return True
 
+
 def parse_status(homework):
-    """Статус финального проекта"""
+    """Статус финального проекта."""
     sections = ['status', 'homework_name']
     
     for section in sections:
@@ -106,14 +109,14 @@ def parse_status(homework):
     verdict = HOMEWORK_VERDICTS[hm_status]
     return f'Изменился статус проверки работы "{homework_name}". {verdict}'
 
- 
+
 def main():
     """Основная логика работы бота."""
     if check_tokens():
         bot = telegram.Bot(token=TELEGRAM_TOKEN)
     else:
         raise ValueError('Отсутствуют данные')
-    
+
     timestamp = int(time.time())
 
     while True:
