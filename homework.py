@@ -94,7 +94,7 @@ def check_response(response):
 def parse_status(homework):
     """Статус финального проекта."""
     sections = ['status', 'homework_name']
-    
+
     for section in sections:
         if section not in homework:
             logger.error(f'Отсутствуют данные {section}')
