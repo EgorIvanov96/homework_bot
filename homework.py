@@ -42,7 +42,7 @@ HOMEWORK_VERDICTS = {
 def check_tokens():
     """Проверяем доступность переменных окружения."""
     variables = [PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]
-    logging.critical(f'Нет переменной')
+    logging.critical('Нет одного из ключей доступа')
     return all(variables)
 
 
@@ -102,10 +102,10 @@ def parse_status(homework):
 def main():
     """Основная логика работы бота."""
     logging.basicConfig(
-    level=logging.DEBUG,
-    filename='main.log',
-    filemode='w',
-    format='%(asctime)s, %(levelname)s, %(message)s'
+        level=logging.DEBUG,
+        filename='main.log',
+        filemode='w',
+        format='%(asctime)s, %(levelname)s, %(message)s'
     )
 
     if check_tokens():
