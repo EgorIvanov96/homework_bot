@@ -1,18 +1,11 @@
-import requests
 import telegram
-import time
-import logging
 import sys
+import logging
 import os
+import requests
+import time
 from dotenv import load_dotenv
 
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    filename='main.log',
-    filemode='w',
-    format='%(asctime)s, %(levelname)s, %(message)s'
-)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -49,19 +42,15 @@ HOMEWORK_VERDICTS = {
 def check_tokens():
     """Проверяем доступность переменных окружения."""
     variables = [PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]
-    for variable in variables:
-        if variable is None:
-            logging.critical(f'Нет переменной {variable}')
-            return False
-        else:
-            return True
+    logging.critical(f'Нет переменной')
+    return all(variables)
 
 
 def send_message(bot, message):
     """Отправляем сообщение в Телеграм."""
     try:
-        bot.send_message(TELEGRAM_CHAT_ID, message)
         logger.debug('Сообщение отправлено')
+        bot.send_message(TELEGRAM_CHAT_ID, message)
     except Exception as error:
         logger.error(f'Сообщение не отправлено. Ошибка {error}')
 
@@ -112,19 +101,26 @@ def parse_status(homework):
 
 def main():
     """Основная логика работы бота."""
+    logging.basicConfig(
+    level=logging.DEBUG,
+    filename='main.log',
+    filemode='w',
+    format='%(asctime)s, %(levelname)s, %(message)s'
+    )
+
     if check_tokens():
         bot = telegram.Bot(token=TELEGRAM_TOKEN)
     else:
-        raise ValueError('Отсутствуют данные')
-
-    timestamp = int(time.time())
+        return ValueError('Отсутствуют данные')
 
     while True:
         try:
+            timestamp = int(time.time())
             response = get_api_answer(timestamp)
             # print(response)
             check_response(response)
             if len(response['homeworks']) != 0:
+                check_response(response)
                 message = parse_status(response['homeworks'][0])
                 send_message(bot, message)
         except Exception as error:
