@@ -67,3 +67,8 @@
     ```bash
     python homework.py
     ```
+
+
+```bash
+git clone git@github.com:EgorIvanov96/api_yamdb.git
+```
