@@ -19,31 +19,31 @@
 
     ```
     git@github.com:EgorIvanov96/homework_bot.git
-    ```
+    ```bash
 
     ```
     cd homework_bot
-    ```
+    ```bash
 
 Создать и активировать виртуальное окружение:
 
     ```
      python -m venv env
-    ```
+    ```bash
 
     ```
     source env/bin/activate
-    ```
+    ```bash
 
 Установить в зависимости:
 
     ```
     python -m pip install --upgrade pip
-    ```
+    ```bash
 
     ```
     requirements.txt
-    ```
+    ```bash
 
 
 Записать в переменные окружения (файл .env) необходимые ключи:
@@ -60,10 +60,10 @@
     TELEGRAM_TOKEN=15430044356:AAF3WNIsYF_oE_fERRTEREJNGT GTG4
 
     TELEGRAM_CHAT_ID=8888777333
-    ```
+    ```bash
 
 Запустить проект:
 
     ```
     python homework.py
-    ```
+    ```bash
